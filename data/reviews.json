@@ -1,0 +1,52 @@
+[
+    {
+      "id": 1,
+      "rating": 5,
+      "review": "Absolutely amazing! The best movie I've seen this year."
+    },
+    {
+      "id": 2,
+      "rating": 4,
+      "review": "Great film with outstanding performances, though the ending felt rushed."
+    },
+    {
+      "id": 3,
+      "rating": 5,
+      "review": "Masterpiece! Perfect from start to finish."
+    },
+    {
+      "id": 4,
+      "rating": 3,
+      "review": "Good but not great. Some scenes dragged on too long."
+    },
+    {
+      "id": 5,
+      "rating": 2,
+      "review": "Disappointing. The plot had potential but failed to deliver."
+    },
+    {
+      "id": 6,
+      "rating": 5,
+      "review": "Flawless cinematography and brilliant acting. A must-watch!"
+    },
+    {
+      "id": 7,
+      "rating": 4,
+      "review": "Really enjoyed it. The characters were well-developed and relatable."
+    },
+    {
+      "id": 8,
+      "rating": 1,
+      "review": "Waste of time. I couldn't wait for it to end."
+    },
+    {
+      "id": 9,
+      "rating": 5,
+      "review": "Emotional rollercoaster. Laughed and cried multiple times."
+    },
+    {
+      "id": 10,
+      "rating": 3,
+      "review": "Decent movie. Some good moments but forgettable overall."
+    }
+]
