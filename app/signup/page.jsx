@@ -17,6 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Image from 'next/image';
+import axios from 'axios';
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -52,7 +53,17 @@ export default function RegistrationForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    axios.post("http://localhost:5000/auth/signup", 
+      { 
+        email: formData["username"],
+        password: formData["password"]
+      },
+      { 
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    ).then(res=>console.log(res.data))
   };
 
   return (
