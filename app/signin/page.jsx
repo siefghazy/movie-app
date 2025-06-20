@@ -1,45 +1,68 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, TextField, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import {useDispatch,useSelector } from 'react-redux';
+import { changeAuth } from '@/Redux/slices';
+import { useRouter } from 'next/navigation';
 export default function CustomForm() {
-  const[isLoggedin,setIsLoggedIn]=useState(false)
+  const authState = useSelector((state) => state.Auth.Auth);
+  const dispatch = useDispatch();
+  const router = useRouter(); 
+  const authLocal=localStorage.getItem("Token")
+  authLocal? dispatch(changeAuth(true)):dispatch(changeAuth(false))
+  const[isLoggedin,setIsloggedin]=useState(null)
+
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
-    message: ''
+    password: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/auth/signin",{
-      email:formData["email"],
-      password:formData["password"]
-    },
-    {
-      headers:{
-        "Content-Type":"application/json"
-      }
-    }
-    ).then(res=>{
-      if(res.status==200){
-       setIsLoggedIn(true)
-        localStorage.setItem("Token",res.data.token)
-        location.assign("/")
-      }
-  })
+    axios
+      .post(
+        'http://localhost:5000/auth/signin',
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem('Token', res.data.token);
+          setIsloggedin(true)
+          router.push('/');
+          dispatch(changeAuth(true))
+        }
+      })
+      .catch((err) => {
+        setIsloggedin(false)
+      });
   };
-
+const wrongSubmition=()=>{
+  return(
+    <motion.div transition={{duration:0.3}} animate={{opacity:1,display:"block"}} initial={{opacity:0,display:"none"}} exit={{opacity:0,display:"none"}} className='absolute w-3/12 rounded-[10px] top-15 right-0 bg-black flex justify-center items-center '>
+      <p className='text-2xl text-amber-50'>Wrong credentials</p>
+    </motion.div>
+  )
+}
+if(authState==false){
   return (
     <>
       <Box 
@@ -181,7 +204,14 @@ export default function CustomForm() {
       </Button>
       </div>
     </Box>
-    
+    {
+      isLoggedin==false ? wrongSubmition():""
+    }
     </>  
   );
+}
+else{
+  router.push('/')
+}
+  
 }

@@ -6,7 +6,6 @@ import { fa3 } from "@fortawesome/free-solid-svg-icons";
 import{faCrown}from"@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 const Trending = ({ imageUrl, rate , id }) => {
-  console.log(id);
   return (
     <div className="relative">
       <div className="absolute left-2.5">

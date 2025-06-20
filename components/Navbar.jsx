@@ -3,9 +3,15 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styling from "../components/Navbar.module.css"
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeAuth } from '@/Redux/slices';
 const Navbar = () => {
     const[navColor,setNavcolor]=useState("bg-transparent")
     const[isActive,setIsactive]=useState(null)
+    const authState = useSelector(state=>state.Auth.Auth)
+    const dispatch=useDispatch()
+    const localAuthState=localStorage.getItem("Token")
+    localAuthState? dispatch(changeAuth(true)): dispatch(changeAuth(false))
     useEffect(()=>{
         window.addEventListener("scroll",()=>{
             if(window.scrollY>200){
@@ -17,6 +23,7 @@ const Navbar = () => {
         })
     },[])
     return (
+        
         <div className={` w-full flex justify-between fixed z-50  bg-gradient-to-t from-transparent to-black  h-15 ${navColor} ${styling.mainNav}`} >
             <div className='w-2/12 flex justify-center  ml-4'>
                 <Image onClick={()=>{
@@ -41,7 +48,9 @@ const Navbar = () => {
                     setIsactive("Contact")
                 }}  className={`archivo-black-regular text-2xl transition-all duration-300 ease-in hover:underline ${isActive=="Contact"? " underline text-red-500": "text-amber-50"}`} href={"/contactUs"}>Contact us</Link></li>
             </ul>
-            <div className='w-2/12'>
+   
+            {
+                authState==false?(<div className='w-2/12'>
                 <div className='w-full pt-4 '>
                     <Link onClick={()=>{
                     setIsactive("signin")
@@ -51,7 +60,17 @@ const Navbar = () => {
                     setIsactive("signup")
                 }} className={`archivo-black-regular  text-2xl transition-all duration-300 ease-in hover:underline  ${isActive=="signup"? " underline text-red-500": "text-amber-50"}`} href={'/signin'}>Sign in</Link>
                 </div>
-            </div>
+            </div>) :(<div className='w-2/12'>
+                    <div className='w-full pt-4'>
+                    <Link onClick={()=>{
+                    setIsactive("Home")
+                   dispatch(changeAuth(false))
+                    localStorage.removeItem("Token")
+                }}  className={`archivo-black-regular  text-2xl  text-amber-50`} href='/'>Log out</Link>
+                    </div>
+                </div>)
+            }
+   
         </div>
     );
 }

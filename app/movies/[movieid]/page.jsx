@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { Star, Share } from '@mui/icons-material';
 import Image from 'next/image';
+import ProtectedRouter from '@/components/ProtectedRouter';
 
 const Page = () => {
   const { movieid } = useParams();
@@ -56,7 +57,8 @@ const Page = () => {
   }, []);
 
   return (
-    <Box sx={{ 
+    <ProtectedRouter>
+<Box sx={{ 
       width: '100%', 
       display: 'flex', 
       flexDirection: 'column', 
@@ -255,6 +257,8 @@ const Page = () => {
         </DialogActions>
       </Dialog>
     </Box>
+    </ProtectedRouter>
+    
   );
 };
 

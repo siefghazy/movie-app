@@ -3,6 +3,7 @@ import Movieitem from "@/components/Movieitem";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import ProtectedRouter from "@/components/ProtectedRouter";
 const Page = () => {
   const [movies, setMovies] = useState([]);
   const[toSearch,setTosearch]=useState([]);
@@ -16,7 +17,9 @@ const Page = () => {
         setTosearch(res.data.results)
     });
   }, []);
+
   return (
+    <ProtectedRouter>
     <>
     <div className="pt-16 w-full flex justify-center ">
         <input onInput={(e)=>{
@@ -47,6 +50,7 @@ const Page = () => {
         </div>
       </motion.div>
     </>
+    </ProtectedRouter>
   );
 };
 

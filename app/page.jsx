@@ -8,8 +8,10 @@ import { fa2 } from '@fortawesome/free-solid-svg-icons';
 import { fa3 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Page = () => {
+  const authState=useSelector(state=>state.Auth.Auth)
     const[trendingMovies,setTrendingMovies]=useState([
         {
             id:541671,
